@@ -1,0 +1,10 @@
+razuberrypy WiFiマークにカーソル重ねる →　ipアドレス調べる
+
+ssh sozo@ipアドレス
+password: sozo
+
+
+実行
+python test.py
+
+10.27.72.48
