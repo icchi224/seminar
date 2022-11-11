@@ -1,20 +1,18 @@
-import time
-import Adafruit_CharLCD as LCD
+import i2clcd
 
-lcd_rs = 25
-lcd_en = 24
-lcd_d4 = 23
-lcd_d5 = 17
-lcd_d6 = 18
-lcd_d7 = 22
-lcd_backlight = 4
+lcd = i2clcd.i2clcd(i2c_bus=1, i2c_addr=0x27, lcd_width=16)
+lcd.init()
 
-lcd_columns = 16
-lcd_rows = 2
+# fill a line by the text
+lcd.print_line('hello', line=0)
+lcd.print_line('world!', line=1, align='RIGHT')
 
-lcd = LCD.Adafruit_CharLCD(lcd_rs,lcd_en,lcd_d4,lcd_d5,lcd_d6,lcd_d7,lcd_columns,lcd_rows,lcd_backlight)
+# print text at the current cursor position
+lcd.move_cursor(1, 0)
+lcd.print('the')
 
-lcd.clear()
-lcd.blink(False)
-lcd.show_cursor(False)
-lcd.message("Hello\nWorld")
+# custom character
+char_celsius = (0x10, 0x06, 0x09, 0x08, 0x08, 0x09, 0x06, 0x00)
+lcd.write_CGRAM(char_celsius, 0)
+lcd.move_cursor(0, 6)
+lcd.print(b'CGRAM: ' + i2clcd.CGRAM_CHR[0])
